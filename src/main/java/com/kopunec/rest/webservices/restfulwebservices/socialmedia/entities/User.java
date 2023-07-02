@@ -1,7 +1,6 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import lombok.*;
@@ -9,14 +8,11 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-@Entity
-
-// TODO Delete this
-@AllArgsConstructor
+@Entity(name = "user_details")
 @NoArgsConstructor
-
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @Id
@@ -30,4 +26,8 @@ public class User {
     @Past
     @NonNull
     LocalDate birthDate;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<Post> posts;
 }

@@ -1,5 +1,6 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,7 +14,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-//    String author;
+    @ManyToOne
+    @JsonIgnore
+    User user;
 
     String content;
 }

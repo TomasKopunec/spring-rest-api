@@ -1,7 +1,7 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.resources;
 
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.User;
-import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.UserService;
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,22 +19,22 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class UserResource {
 
-    UserService userService;
+    UserRepository userRepository;
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userService.findAll();
+        return userRepository.findAll();
     }
 
     @PostMapping("/users")
     @ResponseStatus(code = HttpStatus.CREATED)
     public User createUser(@Valid @RequestBody User user) {
-        return userService.save(user);
+        return userRepository.save(user);
     }
 
     @GetMapping("/users/{id}")
     public EntityModel<User> getUser(@PathVariable Integer id) {
-        EntityModel<User> model = EntityModel.of(userService.findOne(id));
+        EntityModel<User> model = EntityModel.of(userRepository.findById(id).get());
         model.add(linkTo(methodOn(UserResource.class).getAllUsers()).withRel("all-users"));
         model.add(linkTo(methodOn(UserResource.class).getUser(id)).withSelfRel());
         return model;
@@ -43,6 +43,6 @@ public class UserResource {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Integer id) {
-        userService.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
