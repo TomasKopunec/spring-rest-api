@@ -5,10 +5,14 @@ import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.User
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @AllArgsConstructor
@@ -29,8 +33,11 @@ public class UserResource {
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Integer id) {
-        return userService.findOne(id);
+    public EntityModel<User> getUser(@PathVariable Integer id) {
+        EntityModel<User> model = EntityModel.of(userService.findOne(id));
+        model.add(linkTo(methodOn(UserResource.class).getAllUsers()).withRel("all-users"));
+        model.add(linkTo(methodOn(UserResource.class).getUser(id)).withSelfRel());
+        return model;
     }
 
     @DeleteMapping("/users/{id}")

@@ -1,5 +1,7 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import lombok.*;
