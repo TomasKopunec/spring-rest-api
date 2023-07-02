@@ -1,6 +1,5 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import lombok.*;
@@ -28,6 +27,5 @@ public class User {
     LocalDate birthDate;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     List<Post> posts;
 }

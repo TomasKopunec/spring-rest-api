@@ -1,6 +1,8 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.resources;
 
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.Post;
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.User;
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.PostRepository;
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserResource {
 
     UserRepository userRepository;
+
+    PostRepository postRepository;
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
@@ -44,5 +48,19 @@ public class UserResource {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public List<Post> getAllPosts(@PathVariable Integer id) {
+        return userRepository.findById(id).get().getPosts();
+    }
+
+    @PostMapping("/users/{id}/posts")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public List<Post> getAllPosts(@PathVariable Integer id, @Valid @RequestBody Post post) {
+        User user = userRepository.findById(id).get();
+        post.setUser(user);
+        postRepository.save(post);
+        return user.getPosts();
     }
 }
