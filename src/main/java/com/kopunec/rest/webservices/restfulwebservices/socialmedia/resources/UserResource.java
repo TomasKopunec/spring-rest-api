@@ -25,6 +25,11 @@ public class UserResource {
 
     PostRepository postRepository;
 
+    @RequestMapping("/")
+    public String start() {
+        return "Welcome to Social Media API!";
+    }
+
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userRepository.findAll();
