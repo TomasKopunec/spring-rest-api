@@ -8,7 +8,6 @@ public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
         super(message);
     }
-
     public static EntityNotFoundException create(Class<?> entityType, Integer id) {
         return new EntityNotFoundException(entityType.getSimpleName() + " with id " + id + " not found");
     }
