@@ -22,7 +22,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @NonNull
-    User user;
+    UserDetails user;
 
     @Length(min = 8, max = 255)
     String content;

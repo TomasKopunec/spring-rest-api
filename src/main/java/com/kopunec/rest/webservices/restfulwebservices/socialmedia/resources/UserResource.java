@@ -1,9 +1,9 @@
 package com.kopunec.rest.webservices.restfulwebservices.socialmedia.resources;
 
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.Post;
-import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.User;
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.UserDetails;
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.repositories.PostRepository;
-import com.kopunec.rest.webservices.restfulwebservices.socialmedia.repositories.UserRepository;
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.repositories.UserDetailsRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class UserResource {
 
-    UserRepository userRepository;
+    UserDetailsRepository userRepository;
 
     PostRepository postRepository;
 
@@ -31,19 +31,19 @@ public class UserResource {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
+    public List<UserDetails> getAllUsers() {
         return userRepository.findAll();
     }
 
     @PostMapping("/users")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public User createUser(@Valid @RequestBody User user) {
+    public UserDetails createUser(@Valid @RequestBody UserDetails user) {
         return userRepository.save(user);
     }
 
     @GetMapping("/users/{id}")
-    public EntityModel<User> getUser(@PathVariable Integer id) {
-        EntityModel<User> model = EntityModel.of(userRepository.findById(id).get());
+    public EntityModel<UserDetails> getUser(@PathVariable Integer id) {
+        EntityModel<UserDetails> model = EntityModel.of(userRepository.findById(id).get());
         model.add(linkTo(methodOn(UserResource.class).getAllUsers()).withRel("all-users"));
         model.add(linkTo(methodOn(UserResource.class).getUser(id)).withSelfRel());
         return model;
@@ -63,7 +63,7 @@ public class UserResource {
     @PostMapping("/users/{id}/posts")
     @ResponseStatus(code = HttpStatus.CREATED)
     public List<Post> getAllPosts(@PathVariable Integer id, @Valid @RequestBody Post post) {
-        User user = userRepository.findById(id).get();
+        UserDetails user = userRepository.findById(id).get();
         post.setUser(user);
         postRepository.save(post);
         return user.getPosts();
