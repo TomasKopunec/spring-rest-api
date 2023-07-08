@@ -2,8 +2,8 @@ package com.kopunec.rest.webservices.restfulwebservices.socialmedia.resources;
 
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.Post;
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.User;
-import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.PostRepository;
-import com.kopunec.rest.webservices.restfulwebservices.socialmedia.services.UserRepository;
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.repositories.PostRepository;
+import com.kopunec.rest.webservices.restfulwebservices.socialmedia.repositories.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;

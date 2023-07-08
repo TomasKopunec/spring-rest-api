@@ -1,4 +1,4 @@
-package com.kopunec.rest.webservices.restfulwebservices.socialmedia.services;
+package com.kopunec.rest.webservices.restfulwebservices.socialmedia.repositories;
 
 import com.kopunec.rest.webservices.restfulwebservices.socialmedia.entities.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
